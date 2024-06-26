@@ -9,8 +9,9 @@ export class AppComponent implements OnInit {
   public appPages = [
     { title: 'Search', url: '/search', icon: 'search' },
     { title: 'Browse', url: '/browse', icon: '' },
-    { title: 'Bookmarks', url: '/bookmarks', icon: 'bookmark' },
-    { title: 'Flashcards', url: '/flashcards', icon: '' },
+    // Temporarily remove menus that are not available.
+    // { title: 'Bookmarks', url: '/bookmarks', icon: 'bookmark' },
+    // { title: 'Flashcards', url: '/flashcards', icon: '' },
     { title: 'About', url: '/about', icon: 'information-circle' },
   ];
   title = 'Mother Tongues Dictionary';
