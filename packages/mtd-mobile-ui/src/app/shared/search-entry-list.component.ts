@@ -49,27 +49,25 @@ export class SearchEntryListComponent implements OnChanges, OnInit {
   highlight(result: Result, lang: 'L1' | 'L2') {
     const key = lang === 'L1' ? 'word' : 'definition';
     const text = this.$entriesHash.value[result[1]][key];
-  
-    // Split the text by spaces, semicolons, and brackets while preserving delimiters
-    const terms = text.split(/(\s+|;|\(|\))/);
-  
-    // Create a set of indices to highlight, excluding delimiters
-    const indicesToHighlight = new Set(result[2]
-      .filter(match => match[0] === key)
-      .map(match => match[1])
-      .filter(index => terms[index] && ![';', '(', ')'].includes(terms[index])));
-  
-    // Create the highlighted terms
-    const htmlTerms = terms.map((term, index) => {
-      if (indicesToHighlight.has(index)) {
-        return `<span class="langMatched">${term}</span>`;
-      }
-      return term; // No need to wrap non-highlighted terms in a span
+    
+    // Split the text into words and separators
+    const splitRegex = /(\s+|;|\(|\)|,|\.|!|\?)/;
+    const terms = text.split(splitRegex);
+    
+    // Highlight matched words
+    const highlightedTerms = terms.map((term, index) => {
+        // Check if the term is a match and is not a separator
+        const isMatch = result[2].some(match => match[0] === key && match[1] === index);
+        if (isMatch) {
+            return `<span class="langMatched">${term}</span>`;
+        } else {
+            return term;
+        }
     });
-  
-    return htmlTerms.join('');
-  }
-
+    
+    // Join the terms back into a single string
+    return highlightedTerms.join('');
+}
 
   ngOnChanges() {
     if (this.parentEdit !== undefined) {
