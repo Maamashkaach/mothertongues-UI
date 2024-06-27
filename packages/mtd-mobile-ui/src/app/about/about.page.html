@@ -15,7 +15,7 @@
   </ion-header>
   <ion-grid *ngIf="$config | async as config">
     <ion-row class="ion-align-items-center ion-justify-content-center">
-      <h1>{{ config.L1 }} / {{ config.L2 }} Dictionary</h1>
+      <h1>{{ config.L1 }} / {{ config.L2 }} Phrasebook</h1>
     </ion-row>
     <ion-row
       *ngIf="config.aboutPageDescription"
@@ -37,7 +37,7 @@
     <ion-img
       *ngIf="config.aboutPageImg"
       src="{{ config.aboutPageImg }}"
-      alt="The image for the {{ config.L1 }} / {{ config.L2 }} dictionary"
+      alt="The image for the {{ config.L1 }} / {{ config.L2 }} phrasebook"
     ></ion-img>
     <ion-row>
       <ion-col>
