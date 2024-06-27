@@ -69,9 +69,6 @@ export class SearchEntryListComponent implements OnChanges, OnInit {
   
     return htmlTerms.join('');
   }
-  
-    return htmlTerms.join('');
-  }
 
 
   ngOnChanges() {
