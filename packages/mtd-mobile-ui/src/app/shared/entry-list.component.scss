@@ -26,7 +26,11 @@
   text-align: left;
 }
 
-.matchLeftContainer,
+.matchLeftContainer {
+  display: initial;
+  color: var(--ion-color-secondary);
+}
+
 .matchRightContainer {
   display: initial;
 }
