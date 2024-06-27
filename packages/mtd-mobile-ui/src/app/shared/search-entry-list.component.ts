@@ -45,28 +45,23 @@ export class SearchEntryListComponent implements OnChanges, OnInit {
   didDismiss() {
     this.isModalOpen = false;
   }
-
   highlight(result: Result, lang: 'L1' | 'L2') {
     // highlighting in this interface only happens on either words or definitions
     const key = lang === 'L1' ? 'word' : 'definition';
-    const terms = this.$entriesHash.value[result[1]][key].split(/\s+/);
+    const searchTerm = this.searchterm.toLowerCase();
+    const terms = this.$entriesHash.value[result[1]][key].split(/(\s+|[;,.!?])/);
     const htmlTerms = terms.map((word: any) => `<span>${word}</span>`);
     result[2].forEach((match) => {
       if (match[0] === key) {
-        htmlTerms[match[1]] = `<span class="langMatched">${
-          terms[match[1]]
-        }</span>`;
+        const originalWord = terms[match[1]].toLowerCase();
+        if (originalWord.includes(searchTerm)) {
+          htmlTerms[match[1]] = `<span class="langMatched">${
+            terms[match[1]]
+          }</span>`;
+        }
       }
     });
-    // Join the terms back into a single string
-    let highlightedText = htmlTerms.join(' ');
-
-    // Split the text by semicolons, highlight all instances of the search term, and join back
-    highlightedText = highlightedText.split(';').map(part => {
-      return part.replace(new RegExp(`(${this.searchterm})`, 'gi'), `<span class="langMatched">$1</span>`);
-    }).join(' ; ');
-
-    return highlightedText;
+    return htmlTerms.join(' ');
   }
 
   ngOnChanges() {
