@@ -47,22 +47,28 @@ export class SearchEntryListComponent implements OnChanges, OnInit {
   }
 
   highlight(result: Result, lang: 'L1' | 'L2') {
-    // highlighting in this interface only happens on either words or definitions
     const key = lang === 'L1' ? 'word' : 'definition';
     const text = this.$entriesHash.value[result[1]][key];
-    const matches = result[2].filter((match) => match[0] === key).map((match) => match[1]);
   
-    // Split the text by spaces and semicolons (keeping the delimiters in the array)
-    const terms = text.split(/(\s+|;)/);
+    // Split the text by spaces, semicolons, and brackets while preserving delimiters
+    const terms = text.split(/(\s+|;|\(|\))/);
   
+    // Create a set of indices to highlight, excluding delimiters
+    const indicesToHighlight = new Set(result[2]
+      .filter(match => match[0] === key)
+      .map(match => match[1])
+      .filter(index => terms[index] && ![';', '(', ')'].includes(terms[index])));
+  
+    // Create the highlighted terms
     const htmlTerms = terms.map((term, index) => {
-      // Check if the term is in the matches array
-      if (matches.includes(index)) {
+      if (indicesToHighlight.has(index)) {
         return `<span class="langMatched">${term}</span>`;
-      } else {
-        return term;
       }
+      return term; // No need to wrap non-highlighted terms in a span
     });
+  
+    return htmlTerms.join('');
+  }
   
     return htmlTerms.join('');
   }
