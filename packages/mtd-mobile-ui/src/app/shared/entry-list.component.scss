@@ -29,10 +29,12 @@
 .matchLeftContainer {
   display: initial;
   color: var(--ion-color-secondary);
+  margin-right: 3em; // Add more space here
 }
 
 .matchRightContainer {
   display: initial;
+  margin-left: 3em; // Add more space here
 }
 
 .matchRightDiv {
