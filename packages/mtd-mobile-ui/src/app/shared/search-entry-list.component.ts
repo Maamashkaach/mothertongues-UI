@@ -58,7 +58,15 @@ export class SearchEntryListComponent implements OnChanges, OnInit {
         }</span>`;
       }
     });
-    return htmlTerms.join(' ');
+    // Join the terms back into a single string
+    let highlightedText = htmlTerms.join(' ');
+
+    // Split the text by semicolons, highlight all instances of the search term, and join back
+    highlightedText = highlightedText.split(';').map(part => {
+      return part.replace(new RegExp(`(${this.searchterm})`, 'gi'), `<span class="langMatched">$1</span>`);
+    }).join(' ; ');
+
+    return highlightedText;
   }
 
   ngOnChanges() {
