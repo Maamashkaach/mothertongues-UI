@@ -49,37 +49,29 @@ export class SearchEntryListComponent implements OnChanges, OnInit {
   highlight(result: Result, lang: 'L1' | 'L2') {
     const key = lang === 'L1' ? 'word' : 'definition';
     const text = this.$entriesHash.value[result[1]][key];
-    
     console.log('Text:', text);
     
     // Split the text into words and separators
     const splitRegex = /(\s+|;|\(|\)|,|\.|!|\?)/;
     const terms = text.split(splitRegex);
-    
     console.log('Terms:', terms);
     
     // Highlight matched words
     const highlightedTerms = terms.map((term, index) => {
-      // Check if the term is a match and is not a separator
       const isMatch = result[2].some(match => match[0] === key && match[1] === index);
-      
       console.log('Term:', term, 'Index:', index, 'Is Match:', isMatch);
-      
-      if (isMatch && !splitRegex.test(term)) {
+      if (isMatch && term.trim()) {
         return `<span class="langMatched">${term}</span>`;
       } else {
         return term;
       }
     });
     
-    // Join the terms back into a single string
     const highlightedText = highlightedTerms.join('');
-    
     console.log('Highlighted Text:', highlightedText);
-    
     return highlightedText;
   }
-
+  
   ngOnChanges() {
     if (this.parentEdit !== undefined) {
       this.edit = this.parentEdit;
