@@ -56,15 +56,21 @@ export class SearchEntryListComponent implements OnChanges, OnInit {
     const terms = text.split(splitRegex);
     console.log('Terms:', terms);
   
-    // Filter out empty terms and separators
-    const filteredTerms = terms.filter(term => term.trim() !== '' && !splitRegex.test(term));
-    console.log('Filtered Terms:', filteredTerms);
+    // Create a map of term indices to ensure accurate matching
+    let wordIndex = 0;
+    const termIndexMap = terms.map((term, index) => {
+      if (splitRegex.test(term) || term === "") {
+        return -1; // Mark separators and empty terms
+      } else {
+        return wordIndex++; // Map word indices
+      }
+    });
+    console.log('Term Index Map:', termIndexMap);
   
     // Highlight matched words
     const highlightedTerms = terms.map((term, index) => {
       const isMatch = result[2].some(match => {
-        const matchIndex = filteredTerms.indexOf(terms[match[1]]);
-        return match[0] === key && matchIndex === index;
+        return match[0] === key && termIndexMap[index] === match[1];
       });
       console.log('Term:', term, 'Index:', index, 'Is Match:', isMatch);
       if (isMatch && term.trim()) {
