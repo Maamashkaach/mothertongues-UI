@@ -49,12 +49,10 @@ export class SearchEntryListComponent implements OnChanges, OnInit {
   highlight(result: Result, lang: 'L1' | 'L2') {
     const key = lang === 'L1' ? 'word' : 'definition';
     const text = this.$entriesHash.value[result[1]][key];
-    console.log('Text:', text);
   
     // Split the text into words and separators
     const splitRegex = /(\s+|;|\(|\)|,|\.|!|\?)/;
     const terms = text.split(splitRegex);
-    console.log('Terms:', terms);
   
     // Create a map of term indices to ensure accurate matching
     let wordIndex = 0;
@@ -65,14 +63,12 @@ export class SearchEntryListComponent implements OnChanges, OnInit {
         return wordIndex++; // Map word indices
       }
     });
-    console.log('Term Index Map:', termIndexMap);
   
     // Highlight matched words
     const highlightedTerms = terms.map((term, index) => {
       const isMatch = result[2].some(match => {
         return match[0] === key && termIndexMap[index] === match[1];
       });
-      console.log('Term:', term, 'Index:', index, 'Is Match:', isMatch);
       if (isMatch && term.trim()) {
         return `<span class="langMatched">${term}</span>`;
       } else {
@@ -81,7 +77,6 @@ export class SearchEntryListComponent implements OnChanges, OnInit {
     });
   
     const highlightedText = highlightedTerms.join('');
-    console.log('Highlighted Text:', highlightedText);
     return highlightedText;
   }
 
