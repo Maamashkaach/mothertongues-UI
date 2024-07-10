@@ -15,7 +15,7 @@
   </ion-header>
   <ion-grid *ngIf="$config | async as config">
     <ion-row class="ion-align-items-center ion-justify-content-center">
-      <h1>{{ config.L1 }} / {{ config.L2 }} Phrasebook</h1>
+      <h1>{{ config.L1 }} Searchable Phrasebook</h1>
     </ion-row>
     <ion-row
       *ngIf="config.aboutPageDescription"
@@ -37,7 +37,7 @@
     <ion-img
       *ngIf="config.aboutPageImg"
       src="{{ config.aboutPageImg }}"
-      alt="The image for the {{ config.L1 }} / {{ config.L2 }} phrasebook"
+      alt="The image for the {{ config.L1 }} Searchable Phrasebook"
     ></ion-img>
     <ion-row>
       <ion-col>
@@ -49,10 +49,10 @@
         </p>
       </ion-col>
     </ion-row>
-    <ion-row *ngIf="config.build">
+    <!--<ion-row *ngIf="config.build">
       <ion-col>
         <p class="build">Build Number: {{ config.build }}</p>
       </ion-col>
-    </ion-row>
+    </ion-row> -->
   </ion-grid>
 </ion-content>

@@ -66,14 +66,14 @@ export class DataService {
               themes.push(entry.theme);
             }
           }
-          if (entry.source) {
-            if (entry.source in categorizedEntries) {
-              categorizedEntries[entry.source].push(entry);
-            } else {
-              categorizedEntries[entry.source] = [entry];
-              sources.push(entry.source);
-            }
-          }
+          //if (entry.source) {
+          //  if (entry.source in categorizedEntries) {
+          //    categorizedEntries[entry.source].push(entry);
+          //  } else {
+          //    categorizedEntries[entry.source] = [entry];
+          //    sources.push(entry.source);
+          //  }
+          //}
           categorizedEntries['All'].push(entry);
         });
         sources.sort();
